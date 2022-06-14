@@ -140,7 +140,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_PORT = 587
 
-EMAIL_HOST_USER = 'sales@bettereye-ai.com'
+EMAIL_HOST_USER = 'put hostname here'
 
-EMAIL_HOST_PASSWORD = 'Sales0541673487'
+EMAIL_HOST_PASSWORD = 'put password here'
 

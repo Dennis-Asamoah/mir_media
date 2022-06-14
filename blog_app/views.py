@@ -18,8 +18,8 @@ class ArticleListView(View):
             page=request.GET.get('page')
             page=int(page)
 
-        dd = Paginator(self.articles,5)
-        articles = dd.get_page(page)
+        paginate = Paginator(self.articles,5)
+        articles = paginate.get_page(page)
         return render(request, self.template_name, {'articles': articles}) #{'articles':self.queryset})
 
 
@@ -34,14 +34,11 @@ class ArticleDetailView(View):
 class ContactView(View):
     template_name = 'blog_app/request_contact.html'
     email_subject = 'a message'
-    email_message = 'the message'
     email_from = settings.EMAIL_HOST_USER
     recipient_list = ['debug@mir.de']
 
-      
     def get(self, request, *args, **kwargs):
         form = ContactRequestForm()
-        print(form)
         return render(request, self.template_name, {'form':form})
 
     def post(self,request, *args, **kwargs):
@@ -57,7 +54,6 @@ class ContactView(View):
                 email.content_subtype = 'html'
                 email.send()
             except Exception as e:
-                print(55555555555)
                 print(str(e))    
             return redirect('article_list_view')
         else:

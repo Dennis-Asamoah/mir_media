@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import *
 
 
+#a test for the models
 class TestCreatePost(TestCase):
     @classmethod
     def setUpTestData(self):
