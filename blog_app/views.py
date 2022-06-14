@@ -15,8 +15,8 @@ class ArticleListView(View):
     def get(self, request, *args, **kwargs):
         page = 1
         if request.GET.get('page')!=None:
-         page=request.GET.get('page')
-         page=int(page)
+            page=request.GET.get('page')
+            page=int(page)
 
         dd = Paginator(self.articles,5)
         articles = dd.get_page(page)
@@ -36,7 +36,7 @@ class ContactView(View):
     email_subject = 'a message'
     email_message = 'the message'
     email_from = settings.EMAIL_HOST_USER
-    recipient_list = ['obide1@yahoo.com']
+    recipient_list = ['debug@mir.de']
 
       
     def get(self, request, *args, **kwargs):
@@ -49,13 +49,16 @@ class ContactView(View):
         form = ContactRequestForm(data)
         if form.is_valid():
             form.save()
-            #send_mail(self.email_subject, self.email_message, self.email_from, self.recipient_list)
-            email = EmailMessage(
-            self.email_subject, '{} <br> {}'.format(data['name'], data['content']), self.email_from, 
-            self.recipient_list, reply_to=[data['email']]
-            )
-            email.content_subtype = 'html'
-            email.send()
+            try:
+                email = EmailMessage(
+                self.email_subject, '{} <br> {}'.format(data['name'], data['content']), self.email_from, 
+                self.recipient_list, reply_to=[data['email']]
+                )
+                email.content_subtype = 'html'
+                email.send()
+            except Exception as e:
+                print(55555555555)
+                print(str(e))    
             return redirect('article_list_view')
         else:
             return HttpResponse(str(form.errors)) 

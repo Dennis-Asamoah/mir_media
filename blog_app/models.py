@@ -15,7 +15,9 @@ class Article(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
-
+    
+    def __str__(self):
+        return self.title
 
 
 class ContactRequest(models.Model):
@@ -24,10 +26,9 @@ class ContactRequest(models.Model):
     content = models.TextField(max_length=900, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    # def save(self, *args, **kwargs):
-    #     return
-    
-    # def delete(self, *args, **kwargs):
-    #     return
+    def __str__(self):
+        return self.email
+
+  
     
 
