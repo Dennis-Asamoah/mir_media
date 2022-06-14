@@ -9,6 +9,8 @@
 <body>
 
     <h1>Blog article</h1>
+    <br>
+    <a href="/contact_view/">Contact Request</a>
     <ul>
     {% for article  in articles %}
     <li><a href="/article_detail_view/{{article.slug}}/{{article.id}}/" >{{article.title}}</a></li>
@@ -33,6 +35,7 @@
         <a href="?page={{articles.next_page_number}}">next</a>
         <a href="?page={{articles.paginator.num_pages}}">last</a>  
         {% endif%} 
+
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from django.core.mail import  send_mail
+from django.core.mail import  send_mail, EmailMessage
 from django.conf import settings
 from django.core.paginator import  Paginator
 from .models import  *
@@ -47,12 +47,15 @@ class ContactView(View):
     def post(self,request, *args, **kwargs):
         data = request.POST
         form = ContactRequestForm(data)
-        print(dir(form))
         if form.is_valid():
-            print('here')
             form.save()
-            send_mail(self.email_subject, self.email_message, self.email_from, self.recipient_list )
-            
+            #send_mail(self.email_subject, self.email_message, self.email_from, self.recipient_list)
+            email = EmailMessage(
+            self.email_subject, '{} <br> {}'.format(data['name'], data['content']), self.email_from, 
+            self.recipient_list, reply_to=[data['email']]
+            )
+            email.content_subtype = 'html'
+            email.send()
             return redirect('article_list_view')
         else:
-            return HttpResponse(str(form.errors))   
+            return HttpResponse(str(form.errors)) 
